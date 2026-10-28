@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Book of Realms: Stickman Combat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="960" height="540"></canvas>
+
+  <div id="hud" class="hidden">
+    <div class="side">
+      <span class="name" id="name1">Player 1</span>
+      <div class="bar"><u id="lag1"></u><i id="hp1"></i></div>
+      <div class="pips" id="pips1"></div>
+    </div>
+    <div id="center"><div id="timer">60</div><div id="roundLabel">Round 1</div></div>
+    <div class="side right">
+      <span class="name" id="name2">Player 2</span>
+      <div class="bar"><u id="lag2"></u><i id="hp2"></i></div>
+      <div class="pips" id="pips2"></div>
+    </div>
+    <div id="realm">Celestial Dominion · Light</div>
+    <div id="skills1" class="skills"></div>
+    <div id="skills2" class="skills"></div>
+  </div>
+
+  <div id="announce"></div>
+
+  <section id="menu" class="overlay title">
+    <div class="brand">
+      <div class="rise emblemwrap">
+        <svg class="emblem" viewBox="0 0 100 130" aria-hidden="true">
+          <path d="M50 4 L92 62 L50 124 L8 62 Z" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M50 22 L76 62 L50 104 L24 62 Z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M50 58 C44 52 36 52 31 54 V76 C36 74 44 74 50 80 Z" fill="#fff"/>
+          <path d="M50 58 C56 52 64 52 69 54 V76 C64 74 56 74 50 80 Z" fill="#fff" opacity=".85"/>
+          <path d="M14 20 l4 6 -4 6 -4 -6z M88 30 l3 5 -3 5 -3 -5z M50 -2" fill="#fff" class="twinkle"/>
+        </svg>
+      </div>
+      <div class="rise t-small">THE BOOK OF</div>
+      <div class="rise t-realms">REALMS</div>
+      <div class="rise t-sub">Stickman Combat</div>
+    </div>
+
+    <div class="panel rise">
+      <div class="label">Choose your domain</div>
+      <div class="domains" role="radiogroup">
+        <button class="domain sel" data-pick="realmSelect:heaven" role="radio" aria-checked="true">
+          <span class="thumb heaven"></span><b>Celestial Dominion</b><small>Domain 1 · Light</small><em class="tick">✓</em>
+        </button>
+        <button class="domain" data-pick="realmSelect:hell" role="radio" aria-checked="false">
+          <span class="thumb hell"></span><b>Ashen Throne</b><small>Domain 2 · Fire</small><em class="tick">✓</em>
+        </button>
+      </div>
+
+      <div class="row2">
+        <div>
+          <div class="label">Difficulty</div>
+          <div class="seg" style="--i:1" role="radiogroup">
+            <i></i>
+            <button data-pick="difficulty:easy" role="radio">Easy</button>
+            <button class="sel" data-pick="difficulty:normal" role="radio">Normal</button>
+            <button data-pick="difficulty:hard" role="radio">Hard</button>
+          </div>
+        </div>
+        <div>
+          <div class="label">Rounds</div>
+          <div class="seg" style="--i:1" role="radiogroup">
+            <i></i>
+            <button data-pick="rounds:1" role="radio">Single</button>
+            <button class="sel" data-pick="rounds:3" role="radio">Best of 3</button>
+            <button data-pick="rounds:5" role="radio">Best of 5</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modes">
+        <button class="mode primary" data-act="ai"><b>Fight the AI</b><small>Solo duel vs the Rival</small></button>
+        <button class="mode" data-act="pvp"><b>Two Players</b><small>Same keyboard</small></button>
+      </div>
+      <button class="linkbtn" data-act="controls">Controls &amp; keys</button>
+    </div>
+
+    <input type="hidden" id="realmSelect" value="heaven">
+    <input type="hidden" id="difficulty" value="normal">
+    <input type="hidden" id="rounds" value="3">
+  </section>
+
+  <section id="controls" class="overlay hidden">
+    <h2>Controls</h2>
+    <table>
+      <tr><th>Action</th><th>Player 1</th><th>Player 2</th></tr>
+      <tr><td>Move</td><td>A / D</td><td>Left / Right</td></tr>
+      <tr><td>Jump</td><td>W</td><td>Up</td></tr>
+      <tr><td>Light attack</td><td>J</td><td>Numpad 1</td></tr>
+      <tr><td>Heavy attack</td><td>K</td><td>Numpad 2</td></tr>
+      <tr><td>Light bullets</td><td>U</td><td>Numpad 4</td></tr>
+      <tr><td>Dash</td><td>Shift</td><td>Numpad 0</td></tr>
+      <tr><td>Dodge (shield)</td><td>L</td><td>Numpad 3</td></tr>
+      <tr class="later"><td>Technique, special</td><td colspan="2">Arrive in later stages</td></tr>
+    </table>
+    <p class="note">Esc or P pauses. H shows hitboxes. Player vs AI uses the Player 1 keys.</p>
+    <button data-act="closeControls">Back</button>
+  </section>
+
+  <section id="pause" class="overlay hidden">
+    <h2>Paused</h2>
+    <button data-act="resume">Resume</button>
+    <button data-act="restart">Restart match</button>
+    <button data-act="menu" class="quiet">Main menu</button>
+  </section>
+
+  <section id="result" class="overlay hidden">
+    <h2 id="resultTitle">Victory</h2>
+    <p class="sub" id="resultSub"></p>
+    <button data-act="rematch">Rematch</button>
+    <button data-act="menu" class="quiet">Main menu</button>
+  </section>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
+

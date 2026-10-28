@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#090b18">
+  <title>NEON PUCK — Arcade Air Hockey</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand">
+        <div class="logo">◉</div>
+        <div>
+          <h1>NEON <span>PUCK</span></h1>
+          <small>ARCADE AIR HOCKEY · LOCAL MULTIPLAYER</small>
+        </div>
+      </div>
+
+      <div class="topright">
+        <div class="pill"><span class="live-dot"></span>READY TO PLAY</div>
+        <div class="buttons">
+          <button class="ghost" id="soundBtn" aria-label="Toggle sound">♫ SOUND ON</button>
+          <button class="ghost" id="resetBtn">↻ RESET</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="scorebar">
+      <div class="player">
+        <div class="avatar">✦</div>
+        <div><strong>PLAYER ONE</strong><small>CYAN SIDE</small></div>
+      </div>
+
+      <div class="score">
+        <span class="a" id="scoreA">0</span><em>:</em><span class="b" id="scoreB">0</span>
+      </div>
+
+      <div class="player right">
+        <div><strong>PLAYER TWO</strong><small>PINK SIDE</small></div>
+        <div class="avatar">✦</div>
+      </div>
+    </section>
+
+    <section class="table-wrap" id="table">
+      <canvas id="game" aria-label="Air hockey game table"></canvas>
+      <div class="toast" id="toast">GOAL!</div>
+
+      <div class="overlay" id="overlay">
+        <div class="modal">
+          <div class="eyebrow">✦ &nbsp; INSERT COIN? JUST PRESS PLAY &nbsp; ✦</div>
+          <h2 id="modalTitle">READY, PLAYERS?</h2>
+          <p id="modalText">
+            First to 7 goals wins the match.<br>
+            Grab a side and own the table.
+          </p>
+          <button class="primary" id="playBtn">START GAME &nbsp; ▶</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <div class="control-card">
+        <div class="control-title"><i>01</i> PLAYER ONE</div>
+        <div class="keys">
+          <span class="key">W</span><span class="key">A</span>
+          <span class="key">S</span><span class="key">D</span>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="control-title"><i>02</i> PLAYER TWO</div>
+        <div class="keys">
+          <span class="key">↑</span><span class="key">←</span>
+          <span class="key">↓</span><span class="key">→</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span><b>TIP</b> &nbsp; Use a quick flick to send the puck flying.</span>
+      <span>SPACE &nbsp;<b>PAUSE / RESUME</b></span>
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
